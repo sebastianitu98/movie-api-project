@@ -76,23 +76,23 @@ const MovieElement = ({movie}) => {
             <div className="buttons-for-actions flex justify-around w-10/12 my-1">
                 {/* Button for download */}
                 <button className="text-sm">                    
-                    <img className="w-6 h-auto" src="./public/download.png" alt="Download icon" title='Download'/>
+                    <img className="w-6 h-auto" src="./download.bmp" alt="Download icon" title='Download'/>
                 </button>
 
                 {/* Button for favorites */}
                 <button id='fav-btn' className="text-sm" onClick={handleAddToFavorites} >
-                    {canBeAddedToFavorites ? <img className="w-6 h-auto" src="./public/notFavoriteYet.png" alt="FavoriteIcon" title='Add to favorites'/> : 
-                    <img className="w-6 h-auto" src="./public/Favorite.png" alt="RemoveFromFavoritesIcon" title='Remove from favorites'/>}
+                    {canBeAddedToFavorites ? <img className="w-6 h-auto" src="./notFavoriteYet.bmp" alt="FavoriteIcon" title='Add to favorites'/> : 
+                    <img className="w-6 h-auto" src="./favorite.bmp" alt="RemoveFromFavoritesIcon" title='Remove from favorites'/>}
                 </button>
 
                 {/* Button for watchlist */}
                 <button id='watchlist-btn' className="text-sm" onClick={handleAddToWatchlist} >
-                    <img className="w-6 h-auto" src="./public/notBookmarkedYet.png" alt="Add to watchlist icon" title='Add to watchlist'/>
+                    <img className="w-6 h-auto" src="./notBookmarkedYet.bmp" alt="Add to watchlist icon" title='Add to watchlist'/>
                 </button>
 
                 {/* Button to mark as watched */}
                 <button id='watched-btn' className="text-sm" onClick={handleAddToWatched} >
-                    <img className="w-6 h-auto" src="./public/notWatchedYet.png" alt="Watched icon" title='Add to already watched'/>
+                    <img className="w-6 h-auto" src="./notWatchedYet.bmp" alt="Watched icon" title='Add to already watched'/>
                 </button>
             </div>
         </div>
