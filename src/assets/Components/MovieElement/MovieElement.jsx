@@ -7,8 +7,6 @@ import styles from './MovieElement.module.css'
 import { useLocale } from '../../../hooks/useLocale'
 import { ACTIONS } from "../../../context/LocaleContext";
 
-localStorageService.initializeData();
-
 
 const MovieElement = ({ movie }) => {
     const POSTER_PATH = 'https://image.tmdb.org/t/p/original'
