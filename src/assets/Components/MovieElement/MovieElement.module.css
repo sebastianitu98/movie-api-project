@@ -1,3 +1,5 @@
 .movie_element{
     color:rgb(255, 162, 74);
+    min-width: 250px;
+    max-width: 250px;
 }

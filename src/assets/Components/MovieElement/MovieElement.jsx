@@ -1,58 +1,55 @@
-import { formatDate } from "../../../utils/formatDate"
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom"
+import { formatDate } from "../../../utils/formatDate"
 import { localStorageService } from "../../../utils/localStorageService"
 import styles from './MovieElement.module.css'
 
+import { useLocale } from '../../../hooks/useLocale'
+import { ACTIONS } from "../../../context/LocaleContext";
+
 localStorageService.initializeData();
 
-var favorites = localStorageService.getFavorites();
-var watchlist = localStorageService.getWatchlist();
-var watched = localStorageService.getWatched();
 
-const MovieElement = ({movie}) => {
+const MovieElement = ({ movie }) => {
     const POSTER_PATH = 'https://image.tmdb.org/t/p/original'
 
-    var canBeAddedToFavorites = !localStorageService.getFavorites().includes(movie)
-    var canBeAddedToWatchlist = !localStorageService.getWatchlist().includes(movie)
-    var canBeAddedToWatched = !localStorageService.getWatched().includes(movie)
+    const {favorites, watched, watchlist, dispatch} = useLocale()
+
+    const [canBeAddedToFavorites, setCanBeAddedToFavorites] = useState(!(favorites).includes(movie))
+    const [canBeAddedToWatched, setCanBeAddedToWatched] = useState(!(watched).includes(movie))
+    const [canBeAddedToWatchlist, setCanBeAddedToWatchlist] = useState(!(watchlist).includes(movie))
+
+    console.log(favorites)
+    console.log(canBeAddedToFavorites)
 
     
     const handleAddToFavorites = () => {
         if (canBeAddedToFavorites){
-            favorites.push(movie)
-            localStorageService.setFavorites(favorites)
-            canBeAddedToFavorites = false;
+            dispatch({ type: ACTIONS.ADD_TO_FAV, payload: movie })
+            setCanBeAddedToFavorites(false);
         } else {
-            const filteredFavorites = favorites.filter( (el) =>  el.id !== movie.id)
-            localStorageService.setFavorites(filteredFavorites);
-            favorites = localStorageService.getFavorites();
-            canBeAddedToFavorites = true;
+            dispatch({type: ACTIONS.REMOVE_FAVORITE, payload: movie.id})
+            setCanBeAddedToFavorites(true);
         }
     }
 
     const handleAddToWatched = () => {
         if (canBeAddedToWatched){
-            watched.push(movie)
-            localStorageService.setWatched(watched)
-            canBeAddedToWatched = false;
+            dispatch({ type: ACTIONS.ADD_TO_WATCHED, payload: movie })
+            setCanBeAddedToWatched(false)
         } else {
-            const filteredWatched = watched.filter( (el) =>  el.id !== movie.id)
-            localStorageService.setWatched(filteredWatched);
-            watched = localStorageService.getWatched();
-            canBeAddedToWatched = true;
+            dispatch({type: ACTIONS.REMOVE_WATCHED, payload: movie.id})
+            setCanBeAddedToWatched(true)
         }
     }
 
     const handleAddToWatchlist = () => {
         if (canBeAddedToWatchlist){
-            watchlist.push(movie)
-            localStorageService.setWatchlist(watchlist)
-            canBeAddedToWatchlist = false;
+            dispatch({ type: ACTIONS.ADD_TO_WATCHLIST, payload: movie })
+            setCanBeAddedToWatchlist(false);
         } else {
-            const filteredWatchlist = watchlist.filter( (el) =>  el.id !== movie.id)
-            localStorageService.setWatchlist(filteredWatchlist);
-            watchlist = localStorageService.getWatchlist();
-            canBeAddedToWatchlist = true;
+            dispatch({type: ACTIONS.REMOVE_WATCHLIST, payload: movie.id})
+            setCanBeAddedToWatchlist(true);
         }
     }
     
@@ -81,18 +78,17 @@ const MovieElement = ({movie}) => {
 
                 {/* Button for favorites */}
                 <button id='fav-btn' className="text-sm" onClick={handleAddToFavorites} >
-                    {canBeAddedToFavorites ? <img className="w-6 h-auto" src="./notFavoriteYet.bmp" alt="FavoriteIcon" title='Add to favorites'/> : 
-                    <img className="w-6 h-auto" src="./favorite.bmp" alt="RemoveFromFavoritesIcon" title='Remove from favorites'/>}
+                    {<img className="w-6 h-auto" src={canBeAddedToFavorites ? 'notFavoriteYet.bmp' : 'favorite.bmp'} alt="FavoriteIcon" title='Add to favorites'/> }
                 </button>
 
                 {/* Button for watchlist */}
                 <button id='watchlist-btn' className="text-sm" onClick={handleAddToWatchlist} >
-                    <img className="w-6 h-auto" src="./notBookmarkedYet.bmp" alt="Add to watchlist icon" title='Add to watchlist'/>
+                    <img className="w-6 h-auto" src={canBeAddedToWatchlist ? 'notBookmarkedYet.bmp' : 'bookmarked.bmp'} alt="Add to watchlist icon" title='Add to watchlist'/>
                 </button>
 
                 {/* Button to mark as watched */}
                 <button id='watched-btn' className="text-sm" onClick={handleAddToWatched} >
-                    <img className="w-6 h-auto" src="./notWatchedYet.bmp" alt="Watched icon" title='Add to already watched'/>
+                    <img className="w-6 h-auto" src={canBeAddedToWatched ? "notWatchedYet.bmp" : 'watched.bmp'} alt="Watched icon" title='Add to already watched'/>
                 </button>
             </div>
         </div>

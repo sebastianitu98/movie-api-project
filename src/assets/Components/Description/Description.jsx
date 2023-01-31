@@ -9,7 +9,7 @@ const Description = ({isToggled}) => {
             <p className="text-xl text-slate-100">You can sart by clicking the logo in order to see most popular movies of this week.</p>
             <br />
             <br />
-            <p className="text-xl text-slate-100">On the homepage you can click in order to enter your prefered movie name and search for it.</p>
+            <p className="text-xl text-slate-100">On the homepage you can search your prefered movie name and get the results.</p>
         </div>
     )
 }
