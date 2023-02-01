@@ -29,15 +29,16 @@
     justify-content: space-around;
 }
 
-.show{
-    visibility: visible;
-}
-
-.hidden{
-    visibility: hidden;
-}
-
 @media only screen and (max-width: 700px) {
+
+    .show{
+        visibility: visible;
+    }
+    
+    .hidden{
+        visibility: hidden;
+    }
+
     .burger{
         display: inline-block;
         margin-left: auto; 
